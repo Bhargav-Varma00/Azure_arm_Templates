@@ -1,0 +1,87 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "certificateOrders_dev_walmart_location": {
+            "value": null
+        },
+        "certificateOrders_dev_walmart_location_1": {
+            "value": null
+        },
+        "certificateOrders_dev_walmart_location_2": {
+            "value": null
+        },
+        "vaults_walmart_bulk_name": {
+            "value": null
+        },
+        "storageAccounts_gcidev_name": {
+            "value": null
+        },
+        "privateEndpoints_iikcgcidev_name": {
+            "value": null
+        },
+        "publicIPAddresses_walmart_dev_name": {
+            "value": null
+        },
+        "availabilitySets_walmart_b2b_dev_name": {
+            "value": null
+        },
+        "loadBalancers_walmartb2b_dev_appLB_name": {
+            "value": null
+        },
+        "routeTables_m_use2_lle_gci__rt__002_name": {
+            "value": null
+        },
+        "userAssignedIdentities_gci_dev_name": {
+            "value": null
+        },
+        "servers_m_use2_lle_gci__mysqldb__001_name": {
+            "value": null
+        },
+        "virtualMachines_walmartB2B_dev_webserver_name": {
+            "value": null
+        },
+        "networkInterfaces_walmart_b2b_dev_webs334_name": {
+            "value": null
+        },
+        "networkInterfaces_walmartb2b_dev_webse695_name": {
+            "value": null
+        },
+        "virtualNetworks_m_use2_lle_gci__vnet__001_name": {
+            "value": null
+        },
+        "routeTables_m_use2_lle_gci__routetable__001_name": {
+            "value": null
+        },
+        "applicationGateways_m_use2_lle_gci__agw__002_name": {
+            "value": null
+        },
+        "certificateOrders_dev_walmart_name": {
+            "value": null
+        },
+        "virtualMachines_walmart_B2B_dev_webserver_001_name": {
+            "value": null
+        },
+        "networkSecurityGroups_m_use2_lle_gci__nsg__001_name": {
+            "value": null
+        },
+        "networkSecurityGroups_m_use2_lle_gci__nsg__002_name": {
+            "value": null
+        },
+        "privateDnsZones_privatelink_blob_core_windows_net_name": {
+            "value": null
+        },
+        "publicIPAddresses_m_use2_lle_gci__eipwalmart__002_name": {
+            "value": null
+        },
+        "networkInterfaces_iikcgcidev_nic_996533d0_1052_4c55_9db2_4c836dfda13e_name": {
+            "value": null
+        },
+        "galleries_az_sharedservices_images_01_externalid": {
+            "value": null
+        },
+        "virtualNetworks_azuse2_transit_network_vnet_01_externalid": {
+            "value": null
+        }
+    }
+}
