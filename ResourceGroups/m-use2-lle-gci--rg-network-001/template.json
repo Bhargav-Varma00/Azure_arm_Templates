@@ -1,0 +1,4426 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "certificateOrders_dev_walmart_location": {
+            "type": "SecureString"
+        },
+        "certificateOrders_dev_walmart_location_1": {
+            "type": "SecureString"
+        },
+        "certificateOrders_dev_walmart_location_2": {
+            "type": "SecureString"
+        },
+        "vaults_walmart_bulk_name": {
+            "defaultValue": "walmart-bulk",
+            "type": "String"
+        },
+        "storageAccounts_gcidev_name": {
+            "defaultValue": "gcidev",
+            "type": "String"
+        },
+        "privateEndpoints_iikcgcidev_name": {
+            "defaultValue": "iikcgcidev",
+            "type": "String"
+        },
+        "publicIPAddresses_walmart_dev_name": {
+            "defaultValue": "walmart-dev",
+            "type": "String"
+        },
+        "availabilitySets_walmart_b2b_dev_name": {
+            "defaultValue": "walmart-b2b-dev",
+            "type": "String"
+        },
+        "loadBalancers_walmartb2b_dev_appLB_name": {
+            "defaultValue": "walmartb2b-dev-appLB",
+            "type": "String"
+        },
+        "routeTables_m_use2_lle_gci__rt__002_name": {
+            "defaultValue": "m-use2-lle-gci--rt--002",
+            "type": "String"
+        },
+        "userAssignedIdentities_gci_dev_name": {
+            "defaultValue": "gci-dev",
+            "type": "String"
+        },
+        "servers_m_use2_lle_gci__mysqldb__001_name": {
+            "defaultValue": "m-use2-lle-gci--mysqldb--001",
+            "type": "String"
+        },
+        "virtualMachines_walmartB2B_dev_webserver_name": {
+            "defaultValue": "walmartB2B-dev-webserver",
+            "type": "String"
+        },
+        "networkInterfaces_walmart_b2b_dev_webs334_name": {
+            "defaultValue": "walmart-b2b-dev-webs334",
+            "type": "String"
+        },
+        "networkInterfaces_walmartb2b_dev_webse695_name": {
+            "defaultValue": "walmartb2b-dev-webse695",
+            "type": "String"
+        },
+        "virtualNetworks_m_use2_lle_gci__vnet__001_name": {
+            "defaultValue": "m-use2-lle-gci--vnet--001",
+            "type": "String"
+        },
+        "routeTables_m_use2_lle_gci__routetable__001_name": {
+            "defaultValue": "m-use2-lle-gci--routetable--001",
+            "type": "String"
+        },
+        "applicationGateways_m_use2_lle_gci__agw__002_name": {
+            "defaultValue": "m-use2-lle-gci--agw--002",
+            "type": "String"
+        },
+        "certificateOrders_dev_walmart_name": {
+            "defaultValue": "dev-walmart",
+            "type": "String"
+        },
+        "virtualMachines_walmart_B2B_dev_webserver_001_name": {
+            "defaultValue": "walmart-B2B-dev-webserver-001",
+            "type": "String"
+        },
+        "networkSecurityGroups_m_use2_lle_gci__nsg__001_name": {
+            "defaultValue": "m-use2-lle-gci--nsg--001",
+            "type": "String"
+        },
+        "networkSecurityGroups_m_use2_lle_gci__nsg__002_name": {
+            "defaultValue": "m-use2-lle-gci--nsg--002",
+            "type": "String"
+        },
+        "privateDnsZones_privatelink_blob_core_windows_net_name": {
+            "defaultValue": "privatelink.blob.core.windows.net",
+            "type": "String"
+        },
+        "publicIPAddresses_m_use2_lle_gci__eipwalmart__002_name": {
+            "defaultValue": "m-use2-lle-gci--eipwalmart--002",
+            "type": "String"
+        },
+        "networkInterfaces_iikcgcidev_nic_996533d0_1052_4c55_9db2_4c836dfda13e_name": {
+            "defaultValue": "iikcgcidev.nic.996533d0-1052-4c55-9db2-4c836dfda13e",
+            "type": "String"
+        },
+        "galleries_az_sharedservices_images_01_externalid": {
+            "defaultValue": "/subscriptions/862d584d-5ca3-40c5-868a-3382de99b616/resourceGroups/azuse2-sharedservices-goldimages-rsg-01/providers/Microsoft.Compute/galleries/az_sharedservices_images_01",
+            "type": "String"
+        },
+        "virtualNetworks_azuse2_transit_network_vnet_01_externalid": {
+            "defaultValue": "/subscriptions/9b92064a-1388-4f38-b4d6-7317d505dec3/resourceGroups/azuse2-transit-network-rg/providers/Microsoft.Network/virtualNetworks/azuse2-transit-network-vnet-01",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Compute/availabilitySets",
+            "apiVersion": "2019-07-01",
+            "name": "[parameters('availabilitySets_walmart_b2b_dev_name')]",
+            "location": "eastus2",
+            "tags": {
+                "business-unit": " 1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "sku": {
+                "name": "Aligned"
+            },
+            "properties": {
+                "platformUpdateDomainCount": 5,
+                "platformFaultDomainCount": 2,
+                "virtualMachines": []
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers",
+            "apiVersion": "2017-12-01",
+            "name": "[parameters('servers_m_use2_lle_gci__mysqldb__001_name')]",
+            "location": "eastus2",
+            "tags": {
+                "business-unit": " 1110",
+                "cost-center": "54301",
+                "owner": "Kathy Kaiser",
+                "environment": "Dev, QA, UAT",
+                "platform-application": "GCI",
+                "compliance-data-profile": "None",
+                "data-sovereignty-location": "US",
+                "logical-segment": "cat-3"
+            },
+            "sku": {
+                "name": "GP_Gen5_4",
+                "tier": "GeneralPurpose",
+                "family": "Gen5",
+                "capacity": 4
+            },
+            "properties": {
+                "storageProfile": {
+                    "storageMB": 102400,
+                    "backupRetentionDays": 7,
+                    "geoRedundantBackup": "Disabled",
+                    "storageAutogrow": "Enabled"
+                },
+                "version": "5.6",
+                "sslEnforcement": "Enabled",
+                "minimalTlsVersion": "TLSEnforcementDisabled",
+                "infrastructureEncryption": "Disabled",
+                "publicNetworkAccess": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2016-10-01",
+            "name": "[parameters('vaults_walmart_bulk_name')]",
+            "location": "eastus2",
+            "tags": {
+                "business-unit": " 1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "Standard"
+                },
+                "tenantId": "d08e5403-b1c9-4dbf-af91-bab966a84dea",
+                "accessPolicies": [
+                    {
+                        "tenantId": "d08e5403-b1c9-4dbf-af91-bab966a84dea",
+                        "objectId": "07ad28f4-e67c-4d9d-9b5c-fc57be67d590",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "Purge"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers",
+                                "Purge"
+                            ]
+                        }
+                    },
+                    {
+                        "tenantId": "d08e5403-b1c9-4dbf-af91-bab966a84dea",
+                        "objectId": "ed259d60-2d7e-422f-85f5-bfcbd539a35b",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ]
+                        }
+                    },
+                    {
+                        "tenantId": "d08e5403-b1c9-4dbf-af91-bab966a84dea",
+                        "objectId": "868d4c6f-e3d4-466a-b6c6-c904c63f3c50",
+                        "permissions": {
+                            "secrets": [
+                                "Get",
+                                "Set",
+                                "Delete"
+                            ],
+                            "keys": [],
+                            "certificates": []
+                        }
+                    },
+                    {
+                        "tenantId": "d08e5403-b1c9-4dbf-af91-bab966a84dea",
+                        "objectId": "096e1974-0ea2-43ea-b30a-86cc52b1f9af",
+                        "permissions": {
+                            "secrets": [
+                                "Get"
+                            ],
+                            "keys": [],
+                            "certificates": []
+                        }
+                    }
+                ],
+                "enabledForDeployment": true,
+                "enabledForDiskEncryption": true,
+                "enabledForTemplateDeployment": true,
+                "enableSoftDelete": true
+            }
+        },
+        {
+            "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+            "apiVersion": "2018-11-30",
+            "name": "[parameters('userAssignedIdentities_gci_dev_name')]",
+            "location": "eastus2",
+            "tags": {
+                "business-unit": " 1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name')]",
+            "location": "eastus2",
+            "tags": {
+                "business-unit": "1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI",
+                "logical-segment": "cat-3"
+            },
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "AllowAzureLoadbalancerIn",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "AzureLoadBalancer",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 4090,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "RDP_ALLOW",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "10.41.130.0/23",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 110,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "22",
+                                "3389"
+                            ],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "RDP_Allow_out",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "VirtualNetwork",
+                            "destinationAddressPrefix": "10.41.130.0/23",
+                            "access": "Allow",
+                            "priority": 110,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "Centrify_Allow",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 120,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "22",
+                                "135",
+                                "443",
+                                "445",
+                                "3389",
+                                "5985",
+                                "5063",
+                                "5986",
+                                "8080",
+                                "8443",
+                                "49152-65535",
+                                "80"
+                            ],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": [
+                                "10.114.10.5",
+                                "10.114.10.4"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Centrify_Allow_inbound",
+                        "properties": {
+                            "description": "RITM0504510",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 120,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "22",
+                                "135",
+                                "443",
+                                "445",
+                                "3389",
+                                "5985",
+                                "5063",
+                                "5986",
+                                "8080",
+                                "8443",
+                                "49152-65535",
+                                "80"
+                            ],
+                            "sourceAddressPrefixes": [
+                                "10.114.10.5",
+                                "10.114.10.4"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "SCCM_OUTBOUND_ALLOW",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 130,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "80",
+                                "443",
+                                "10123",
+                                "8530",
+                                "8531"
+                            ],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": [
+                                "10.114.9.4",
+                                "10.41.128.167"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "SPLUNK_OUTBOUND_ALLOW",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 140,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "514-521",
+                                "8089",
+                                "9997"
+                            ],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": [
+                                "10.114.9.0/24",
+                                "10.40.110.12",
+                                "10.40.110.221",
+                                "10.41.253.147"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "CMDB_ALLOW",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 130,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "21",
+                                "22",
+                                "23",
+                                "25",
+                                "53",
+                                "80",
+                                "110",
+                                "111",
+                                "135",
+                                "137",
+                                "139",
+                                "143",
+                                "161",
+                                "162",
+                                "199",
+                                "389",
+                                "427",
+                                "443",
+                                "445",
+                                "515",
+                                "548",
+                                "587",
+                                "636",
+                                "993",
+                                "995",
+                                "989",
+                                "990",
+                                "1414",
+                                "1433",
+                                "1521",
+                                "2049",
+                                "3306",
+                                "5060",
+                                "5432",
+                                "5480",
+                                "5666",
+                                "5985",
+                                "5986",
+                                "5989",
+                                "7001",
+                                "7500",
+                                "8080",
+                                "8443",
+                                "9080",
+                                "9100",
+                                "9443",
+                                "49152-65535"
+                            ],
+                            "sourceAddressPrefixes": [
+                                "10.41.128.24",
+                                "10.40.1.11"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "CMDB_OUTBOUND_ALLOW",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 150,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "21",
+                                "22",
+                                "23",
+                                "25",
+                                "53",
+                                "80",
+                                "110",
+                                "111",
+                                "135",
+                                "137",
+                                "139",
+                                "143",
+                                "161",
+                                "162",
+                                "199",
+                                "389",
+                                "427",
+                                "443",
+                                "445",
+                                "515",
+                                "548",
+                                "587",
+                                "636",
+                                "993",
+                                "995",
+                                "989",
+                                "990",
+                                "1414",
+                                "1433",
+                                "1521",
+                                "2049",
+                                "3306",
+                                "5060",
+                                "5432",
+                                "5480",
+                                "5666",
+                                "5985",
+                                "5986",
+                                "5989",
+                                "7001",
+                                "7500",
+                                "8080",
+                                "8443",
+                                "9080",
+                                "9100",
+                                "9443",
+                                "49152-65535"
+                            ],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": [
+                                "10.40.1.11",
+                                "10.41.128.24"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "McAFEE_OUTBOUND_ALLOW",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 160,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "8883",
+                                "443",
+                                "8081"
+                            ],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": [
+                                "10.41.129.206",
+                                "10.41.129.76"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "McAfee_Allow",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 160,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "8081",
+                                "8883",
+                                "443"
+                            ],
+                            "sourceAddressPrefixes": [
+                                "10.41.129.206",
+                                "10.41.129.76"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "Opsview_outbound_allow",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 170,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "5666",
+                                "5667",
+                                "443",
+                                "22"
+                            ],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": [
+                                "10.114.9.15",
+                                "10.41.128.112"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Opsview_Allow",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 170,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "5666",
+                                "5667",
+                                "443"
+                            ],
+                            "sourceAddressPrefixes": [
+                                "10.41.128.112",
+                                "10.114.9.15"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "Port_22",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name')]",
+            "location": "eastus2",
+            "tags": {
+                "business-unit": " 1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "appgateway1",
+                        "properties": {
+                            "description": "Gateway manager access",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "65200-65535",
+                            "sourceAddressPrefix": "GatewayManager",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 120,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "Azure_LB_Monitor",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "AzureLoadBalancer",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 130,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "InCapsula_Sources",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 140,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                "199.83.128.0/21",
+                                "198.143.32.0/19",
+                                "149.126.72.0/21",
+                                "103.28.248.0/22",
+                                "45.64.64.0/22",
+                                "185.11.124.0/22",
+                                "192.230.64.0/18",
+                                "107.154.0.0/16",
+                                "45.60.0.0/16",
+                                "45.223.0.0/16"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "DENY_Internet_Access",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "Internet",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 150,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones",
+            "apiVersion": "2018-09-01",
+            "name": "[parameters('privateDnsZones_privatelink_blob_core_windows_net_name')]",
+            "location": "global",
+            "tags": {
+                "business-unit": " 1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "properties": {
+                "maxNumberOfRecordSets": 25000,
+                "maxNumberOfVirtualNetworkLinks": 1000,
+                "maxNumberOfVirtualNetworkLinksWithRegistration": 100,
+                "numberOfRecordSets": 2,
+                "numberOfVirtualNetworkLinks": 1,
+                "numberOfVirtualNetworkLinksWithRegistration": 0,
+                "provisioningState": "Succeeded"
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('publicIPAddresses_m_use2_lle_gci__eipwalmart__002_name')]",
+            "location": "eastus2",
+            "tags": {
+                "business-unit": " 1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+                "ipAddress": "52.247.36.193",
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('publicIPAddresses_walmart_dev_name')]",
+            "location": "eastus2",
+            "tags": {
+                "business-unit": " 1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "sku": {
+                "name": "Basic"
+            },
+            "properties": {
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('routeTables_m_use2_lle_gci__routetable__001_name')]",
+            "location": "eastus2",
+            "tags": {
+                "business-unit": "1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI",
+                "logical-segment": "cat-3"
+            },
+            "properties": {
+                "disableBgpRoutePropagation": true,
+                "routes": [
+                    {
+                        "name": "InCommSummary",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/8",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.114.2.10"
+                        }
+                    },
+                    {
+                        "name": "Default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.114.2.15"
+                        }
+                    },
+                    {
+                        "name": "Azure-Prod-vnets",
+                        "properties": {
+                            "addressPrefix": "10.114.0.0/17",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.114.2.5"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('routeTables_m_use2_lle_gci__rt__002_name')]",
+            "location": "eastus2",
+            "tags": {
+                "business-unit": " 1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                "routes": [
+                    {
+                        "name": "Azure-Prod-vnets",
+                        "properties": {
+                            "addressPrefix": "10.114.0.0/17",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.114.2.5"
+                        }
+                    },
+                    {
+                        "name": "InComm_Summary",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/8",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.114.2.10"
+                        }
+                    },
+                    {
+                        "name": "Internet",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "Internet"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[parameters('storageAccounts_gcidev_name')]",
+            "location": "eastus2",
+            "tags": {
+                "business-unit": " 1110",
+                "environment": "Dev, QA, UAT",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "minimumTlsVersion": "TLS1_2",
+                "allowBlobPublicAccess": true,
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Deny"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "services": {
+                        "file": {
+                            "keyType": "Account",
+                            "enabled": true
+                        },
+                        "blob": {
+                            "keyType": "Account",
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                },
+                "accessTier": "Hot"
+            }
+        },
+        {
+            "type": "Microsoft.CertificateRegistration/certificateOrders",
+            "apiVersion": "2015-08-01",
+            "name": "[parameters('certificateOrders_dev_walmart_name')]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_walmart_bulk_name'))]"
+            ],
+            "tags": {
+                "business-unit": " 1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "properties": {
+                "certificates": {
+                    "dev-walmart": {
+                        "keyVaultId": "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_walmart_bulk_name'))]",
+                        "keyVaultSecretName": "[concat(parameters('certificateOrders_dev_walmart_name'), 'af6a04ab-c0b3-4637-a9fd-a38fc6ba9989')]",
+                        "provisioningState": "Succeeded"
+                    }
+                },
+                "distinguishedName": "CN=*.giftcardimpressions.com",
+                "domainVerificationToken": "QCF8HVLLARIL9SLDL4115119A9",
+                "validityInYears": 1,
+                "keySize": 2048,
+                "productType": "StandardDomainValidatedWildCardSsl",
+                "autoRenew": true,
+                "provisioningState": "Succeeded",
+                "status": "Issued",
+                "signedCertificate": {
+                    "location": "[parameters('certificateOrders_dev_walmart_location')]"
+                },
+                "csr": "-----BEGIN NEW CERTIFICATE REQUEST-----\r\nMIIETDCCAzQCAQAwJDEiMCAGA1UEAwwZKi5naWZ0Y2FyZGltcHJlc3Npb25zLmNv\r\nbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMOuOvFKeR+B7J3twsF0\r\n7YJ81cycoF5OGRPJund8xBveK76Z25KaMDz7LREY46CzNc5lUPEnjcwrMaaipFOP\r\nVV5ZjpBGgEfUjCYzwATs6y13K8Y/KH5RgakWiMLsdp7B+uWuMBoxzkjpkiE2WRRQ\r\n66GMImftT80PZQlEPZXgaTI2uPfbO/GtR3nYo8x3ooFI+z+9uiRymm2gKimBALaV\r\neWw+ZmLNSDiY5dCr2zBFrQP0LoXL02r3aFRQBipbdpsp7M65vwO4Kds/qORbIsvr\r\nPF4VlgStMvX2mDgzV5IUiDgd0FLpjHAXruqxE3DX7nS/BdgwXXgdiGn2sXMYBkyV\r\nd7sCAwEAAaCCAeEwHAYKKwYBBAGCNw0CAzEOFgwxMC4wLjE0MzkzLjIwTQYJKwYB\r\nBAGCNxUUMUAwPgIBBQwOUkQwMDE1NUQzMUVBRkIMH0lJUyBBUFBQT09MXEdlb01h\r\nc3RlckFwcFBvb2xDc20MCHczd3AuZXhlMIGCBgorBgEEAYI3DQICMXQwcgIBAR5q\r\nAE0AaQBjAHIAbwBzAG8AZgB0ACAARQBuAGgAYQBuAGMAZQBkACAAUgBTAEEAIABh\r\nAG4AZAAgAEEARQBTACAAQwByAHkAcAB0AG8AZwByAGEAcABoAGkAYwAgAFAAcgBv\r\nAHYAaQBkAGUAcgMBADCB7AYJKoZIhvcNAQkOMYHeMIHbMA4GA1UdDwEB/wQEAwIF\r\noDATBgNVHSUEDDAKBggrBgEFBQcDATCBlAYJKoZIhvcNAQkPBIGGMIGDMA4GCCqG\r\nSIb3DQMCAgIAgDAOBggqhkiG9w0DBAICAIAwBwYFKw4DAgcwCgYIKoZIhvcNAwcw\r\nCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBLTALBglghkgBZQMEARYwCwYJYIZIAWUD\r\nBAEZMAsGCWCGSAFlAwQBAjALBglghkgBZQMEAQUwHQYDVR0OBBYEFJjc6TteCTBL\r\n0bdRGVj1byAK2HF5MA0GCSqGSIb3DQEBCwUAA4IBAQBcI6jyNMfXW9BdGmfP4b2B\r\nVgP05mvxdgP8wJstCBGyVNgBAF45NSWAiyz1h3dAC94c+WSe09rJvNktzg5lB+zs\r\ns6T6TqBXNxCyc3LU2bqXq+qrFYHqAY51kJ5U9TaN+2eDbrfJSzQKs9jzyxWdOoI6\r\nbQDMDjwTMAHFzMTyEpDOwH2UnpgTjJUJKG8jZ4NFXZEPXvhs002hcf5jnntzp3D8\r\npxACHskfEtUNhYGBy31d2dVkHewmsn0JTGp3ia2bp9iIRhbEpI0FXwB0/maTXDQc\r\nPdsi9109ggheZseoaVHu+D3ej/n3syZMValXfHsTdfPelV8v4Six7Nsv8cZno1FE\r\n-----END NEW CERTIFICATE REQUEST-----\r\n",
+                "intermediate": {
+                    "location": "[parameters('certificateOrders_dev_walmart_location_1')]"
+                },
+                "root": {
+                    "location": "[parameters('certificateOrders_dev_walmart_location_2')]"
+                },
+                "serialNumber": "14031691424543548582",
+                "lastCertificateIssuanceTime": "2020-11-02T19:57:20.0636056",
+                "expirationTime": "2021-11-02T19:56:47"
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-07-01",
+            "name": "[parameters('virtualMachines_walmartB2B_dev_webserver_name')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_walmartb2b_dev_webse695_name'))]"
+            ],
+            "tags": {
+                "owner": "eKaiser@incomm.com",
+                "business-unit": "1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "platform-application": "GCI"
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_D2_v3"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "id": "[concat(parameters('galleries_az_sharedservices_images_01_externalid'), '/images/InCommlinuxGOLD')]"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(parameters('virtualMachines_walmartB2B_dev_webserver_name'), '_OsDisk_1_c37d75e2b7f2464cb89d378e29e31f55')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "StandardSSD_LRS",
+                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_walmartB2B_dev_webserver_name'), '_OsDisk_1_c37d75e2b7f2464cb89d378e29e31f55'))]"
+                        },
+                        "diskSizeGB": 30
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_walmartB2B_dev_webserver_name')]",
+                    "adminUsername": "azureuser",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "/home/azureuser/.ssh/authorized_keys",
+                                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDHlh+/0UQfl5fYbsoGBjzfiCD9\r\ncpt1k79zNeMDSfs91jEtIwdp0IRzsHPOFOFNq1eFTu22ydBUBPL1ks5dQkdZxm61\r\nEKfLFEGf95ZTMo2jqeO2aMYwTR0FvoprUopaKuu0PSQG4BszvibhCuSD/5YG0aSu\r\n1FC+FCsoEc6LwS6bBtm4jDb9cMwgEf4CtvwqmtpFppTISW+mh3u5z9IcbrpVKo31\r\njnSCXg8jmbqVRrMyYTZjkFUBXykLngcqwMoc5XjRToIIE5rh6FYLxCd73iyB7GPc\r\nq1OK0GPyefAU+c0I6+7F1lg76T83OF1shhSEvWkajxEhTobCbOF9p7TI0z0vV+/0\r\n/H4sE/9GL05Gf24Ft5by5excq9HzvBmHnbN6emzoNFT3XB10SBmwGh/u8tSfKSCS\r\nbqOMoybj4x/rehqBDnmPCPEtmPbyUCOPoMRpYz8FLaPlvGid9PlDxT9X7+VvZzDp\r\n1LnVELcTETPWhg4P2W8ZM6wPO7AJ6guGgkecBtE= generated-by-azure\r\n"
+                                }
+                            ]
+                        },
+                        "provisionVMAgent": true
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true,
+                    "requireGuestProvisionSignal": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_walmartb2b_dev_webse695_name'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-07-01",
+            "name": "[parameters('virtualMachines_walmart_B2B_dev_webserver_001_name')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_walmart_b2b_dev_webs334_name'))]"
+            ],
+            "tags": {
+                "business-unit": "1110",
+                "cost-center": "54301",
+                "owner": "Kathy Kaiser",
+                "environment": "Dev, QA, UAT",
+                "platform-application": "GCI",
+                "compliance-data-profile": "None",
+                "data-sovereignty-location": "US",
+                "logical-segment": "cat-3"
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_D2s_v3"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "id": "[concat(parameters('galleries_az_sharedservices_images_01_externalid'), '/images/InCommlinuxGOLD')]"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(parameters('virtualMachines_walmart_B2B_dev_webserver_001_name'), '_OsDisk_1_d4251b2319a9495da315f52574d43759')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS",
+                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_walmart_B2B_dev_webserver_001_name'), '_OsDisk_1_d4251b2319a9495da315f52574d43759'))]"
+                        },
+                        "diskSizeGB": 30
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_walmart_B2B_dev_webserver_001_name')]",
+                    "adminUsername": "azureuser",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "/home/azureuser/.ssh/authorized_keys",
+                                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCwqP8b5IVMwkyoSnrg/E0b/sLZ\r\n56tPABC+Yn0omM+k/I13VMJ/xy9JMJxISSorp+BMzg2MG+FS58ahR5/o5/Uhke2s\r\nVVvWQ8yFbU19m79R4p8lI0YN3GjHd+4U1UBzyZfCv+x+BdjmE/De+rwgY38zN5Si\r\n9KcVZCqRk4G0ELUtguTNzTjuDaQzVrfZix5CQsxn1DZOyLT1PylY2aE9GeAu0AsY\r\nwiNLFlYaXVllH7ihLN3/T+uXLe5xT48w164wFWRWcbwewiwkyVgGeK3tYC2XsOak\r\n+3NJJNaKdOH9nFT4Engdh1dWyCxtvxKJdV6ymzSMHFSix+VbnmtDZMGqpHvNcRx/\r\nDevNu0CXIqZWjvRU8hMzKQ04AZ7sC+K18sg2NDT+68f+bVGT0GXxH56DE2Oon59u\r\nnGL/CJyXrMThJsCaknP80Il9tOqZCXpREkpJKI4hcOOaiWDPODiFS1CODcdk/3fZ\r\n2y3OfLuGbS/BD5rQX6IFoTgIjy8P+RUNC7xs0gM= generated-by-azure\r\n"
+                                }
+                            ]
+                        },
+                        "provisionVMAgent": true
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true,
+                    "requireGuestProvisionSignal": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_walmart_b2b_dev_webs334_name'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/audit_log_enabled')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/audit_log_events')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "CONNECTION",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/audit_log_exclude_users')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "azure_superuser",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/audit_log_include_users')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/binlog_expire_logs_seconds')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/binlog_row_image')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "minimal",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/binlog_sum_size_for_stop_pct_max')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "30",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/character_set_server')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "latin1",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/collation_server')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "latin1_swedish_ci",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/connect_timeout')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "10",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/default_week_format')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/div_precision_increment')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "4",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/eq_range_index_dive_limit')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "10",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/event_scheduler')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/explicit_defaults_for_timestamp')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "ON",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/flush_time')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/ft_query_expansion_limit')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "20",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/group_concat_max_len')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1024",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/init_connect')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_adaptive_flushing')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "ON",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_adaptive_flushing_lwm')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "10",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_adaptive_hash_index')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "ON",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_adaptive_max_sleep_delay')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "150000",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_additional_mem_pool_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "8388608",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_autoextend_increment')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "64",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_autoinc_lock_mode')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_buffer_pool_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "16106127360",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_change_buffer_max_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "25",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_change_buffering')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "all",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_cmp_per_index_enabled')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_commit_concurrency')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_compression_failure_threshold_pct')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "5",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_compression_level')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "6",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_compression_pad_pct_max')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "50",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_concurrency_tickets')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "5000",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_file_format')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "Antelope",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_file_per_table')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "ON",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_ft_cache_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "8000000",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_ft_enable_stopword')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "ON",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_ft_max_token_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "84",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_ft_min_token_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "3",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_ft_num_word_optimize')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "2000",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_ft_result_cache_limit')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "2000000000",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_ft_sort_pll_degree')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "2",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_ft_total_cache_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "640000000",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_io_capacity')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "200",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_io_capacity_max')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "2000",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_large_prefix')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "ON",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_lock_wait_timeout')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "50",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_log_compressed_pages')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "ON",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_lru_scan_depth')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1024",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_max_dirty_pages_pct')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "75",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_max_dirty_pages_pct_lwm')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_max_purge_lag')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_max_purge_lag_delay')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_old_blocks_pct')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "37",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_old_blocks_time')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1000",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_online_alter_log_max_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "134217728",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_optimize_fulltext_only')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_purge_batch_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "300",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_purge_threads')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_random_read_ahead')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_read_ahead_threshold')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "56",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_read_io_threads')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "4",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_rollback_segments')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "128",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_stats_auto_recalc')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "ON",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_stats_include_delete_marked')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_stats_method')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "nulls_equal",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_stats_on_metadata')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_stats_persistent')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "ON",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_stats_persistent_sample_pages')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "20",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_stats_transient_sample_pages')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "8",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_sync_array_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_table_locks')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "ON",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_thread_concurrency')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_thread_sleep_delay')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "10000",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/innodb_write_io_threads')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "4",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/interactive_timeout')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "28800",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/join_buffer_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "262144",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/local_infile')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "ON",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/lock_wait_timeout')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "31536000",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/log_bin_trust_function_creators')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/log_output')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "FILE",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/log_queries_not_using_indexes')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/log_slow_admin_statements')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/log_slow_slave_statements')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/log_throttle_queries_not_using_indexes')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/long_query_time')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "10",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/lower_case_table_names')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_allowed_packet')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "536870912",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_connect_errors')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "100",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_connections')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "625",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_digest_length')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1024",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_error_count')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "64",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_heap_table_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "16777216",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_join_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "18446744073709551615",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_length_for_sort_data')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1024",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_prepared_stmt_count')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "16382",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_seeks_for_key')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "4294967295",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_sort_length')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1024",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_sp_recursion_depth')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_user_connections')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/max_write_lock_count')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "4294967295",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/min_examined_row_limit')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/net_buffer_length')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "16384",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/net_read_timeout')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "120",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/net_retry_count')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "10",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/net_write_timeout')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "240",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/optimizer_prune_level')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/optimizer_search_depth')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "62",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/optimizer_switch')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "default",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/performance_schema')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "ON",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/query_cache_limit')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1048576",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/query_cache_min_res_unit')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "4096",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/query_cache_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "0",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/query_cache_type')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/query_prealloc_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "8192",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/range_alloc_block_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "4096",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/read_only')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/redirect_enabled')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/relay_log_space_limit')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1073741824",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/replicate_wild_ignore_table')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "mysql.%,information_schema.%,performance_schema.%",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/server_id')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "2398544377",
+                "source": "user-override"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/skip_show_database')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/slave_net_timeout')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "60",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/slow_query_log')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "OFF",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/sort_buffer_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "524288",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/sql_mode')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/stored_program_cache')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "256",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/table_definition_cache')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "5000",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/table_open_cache')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "5000",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/table_open_cache_instances')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "1",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/thread_cache_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "14",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/thread_stack')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "262144",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/time_zone')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "SYSTEM",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/tmp_table_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "16777216",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/transaction_prealloc_size')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "4096",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/tx_isolation')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "REPEATABLE-READ",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/updatable_views_with_limit')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "YES",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/configurations",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/wait_timeout')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "value": "180",
+                "source": "system-default"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/databases",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/information_schema')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "charset": "utf8",
+                "collation": "utf8_general_ci"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/databases",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/mysql')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "charset": "latin1",
+                "collation": "latin1_swedish_ci"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/databases",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/performance_schema')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "charset": "utf8",
+                "collation": "utf8_general_ci"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/servers/securityAlertPolicies",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('servers_m_use2_lle_gci__mysqldb__001_name'), '/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/servers', parameters('servers_m_use2_lle_gci__mysqldb__001_name'))]"
+            ],
+            "properties": {
+                "state": "Disabled",
+                "disabledAlerts": [
+                    ""
+                ],
+                "emailAddresses": [
+                    ""
+                ],
+                "emailAccountAdmins": false,
+                "retentionDays": 0
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2016-10-01",
+            "name": "[concat(parameters('vaults_walmart_bulk_name'), '/dev-walmartaf6a04ab-c0b3-4637-a9fd-a38fc6ba9989')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_walmart_bulk_name'))]"
+            ],
+            "tags": {
+                "CertificateId": "/subscriptions/e07b13da-e30b-4bfd-a8fa-0c4ac75e6de3/resourceGroups/m-use2-lle-gci--rg-network-001/providers/Microsoft.CertificateRegistration/certificateOrders/dev-walmart/certificates/dev-walmart",
+                "Thumbprint": "E8108B6338DB70D616A13BED64FEB56C889577F8",
+                "SerialNumber": "00C2BA9501EDD024A6",
+                "CertificateState": "Ready"
+            },
+            "properties": {
+                "contentType": "application/x-pkcs12",
+                "attributes": {
+                    "enabled": true,
+                    "nbf": 1604347007,
+                    "exp": 1635883007
+                }
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2016-10-01",
+            "name": "[concat(parameters('vaults_walmart_bulk_name'), '/walmart-dev')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_walmart_bulk_name'))]"
+            ],
+            "properties": {
+                "contentType": "application/x-pkcs12",
+                "attributes": {
+                    "enabled": true,
+                    "nbf": 1604347007,
+                    "exp": 1635883007
+                }
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2016-10-01",
+            "name": "[concat(parameters('vaults_walmart_bulk_name'), '/walmartwildcard')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_walmart_bulk_name'))]"
+            ],
+            "properties": {
+                "contentType": "application/x-pkcs12",
+                "attributes": {
+                    "enabled": true,
+                    "nbf": 1604347163,
+                    "exp": 1635883763
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('loadBalancers_walmartb2b_dev_appLB_name')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_walmart_dev_name'))]"
+            ],
+            "tags": {
+                "business-unit": " 1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "sku": {
+                "name": "Basic"
+            },
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontEnd",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_walmart_dev_name'))]"
+                            },
+                            "privateIPAddressVersion": "IPv4"
+                        }
+                    }
+                ],
+                "backendAddressPools": [],
+                "loadBalancingRules": [],
+                "probes": [],
+                "inboundNatRules": [],
+                "inboundNatPools": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('networkInterfaces_iikcgcidev_nic_996533d0_1052_4c55_9db2_4c836dfda13e_name')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), 'm-use2-lle-gci--snet--001')]"
+            ],
+            "tags": {
+                "business-unit": " 1110",
+                "environment": "Dev, QA, UAT",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "blob-blob.privateEndpoint",
+                        "properties": {
+                            "privateIPAddress": "10.114.192.5",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), 'm-use2-lle-gci--snet--001')]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4"
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableAcceleratedNetworking": false,
+                "enableIPForwarding": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('networkInterfaces_walmartb2b_dev_webse695_name')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), 'm-use2-lle-gci--snet--001')]"
+            ],
+            "tags": {
+                "owner": "eKaiser@incomm.com",
+                "business-unit": "1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "platform-application": "GCI"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.114.192.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), 'm-use2-lle-gci--snet--001')]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4"
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableAcceleratedNetworking": false,
+                "enableIPForwarding": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/AllowAzureLoadbalancerIn')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "AzureLoadBalancer",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 4090,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name'), '/appgateway1')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name'))]"
+            ],
+            "properties": {
+                "description": "Gateway manager access",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "65200-65535",
+                "sourceAddressPrefix": "GatewayManager",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 120,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name'), '/Azure_LB_Monitor')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "AzureLoadBalancer",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 130,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/Centrify_Allow')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "sourceAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 120,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                    "22",
+                    "135",
+                    "443",
+                    "445",
+                    "3389",
+                    "5985",
+                    "5063",
+                    "5986",
+                    "8080",
+                    "8443",
+                    "49152-65535",
+                    "80"
+                ],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": [
+                    "10.114.10.5",
+                    "10.114.10.4"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/Centrify_Allow_inbound')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "description": "RITM0504510",
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationAddressPrefix": "VirtualNetwork",
+                "access": "Allow",
+                "priority": 120,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                    "22",
+                    "135",
+                    "443",
+                    "445",
+                    "3389",
+                    "5985",
+                    "5063",
+                    "5986",
+                    "8080",
+                    "8443",
+                    "49152-65535",
+                    "80"
+                ],
+                "sourceAddressPrefixes": [
+                    "10.114.10.5",
+                    "10.114.10.4"
+                ],
+                "destinationAddressPrefixes": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/CMDB_ALLOW')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 130,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                    "21",
+                    "22",
+                    "23",
+                    "25",
+                    "53",
+                    "80",
+                    "110",
+                    "111",
+                    "135",
+                    "137",
+                    "139",
+                    "143",
+                    "161",
+                    "162",
+                    "199",
+                    "389",
+                    "427",
+                    "443",
+                    "445",
+                    "515",
+                    "548",
+                    "587",
+                    "636",
+                    "993",
+                    "995",
+                    "989",
+                    "990",
+                    "1414",
+                    "1433",
+                    "1521",
+                    "2049",
+                    "3306",
+                    "5060",
+                    "5432",
+                    "5480",
+                    "5666",
+                    "5985",
+                    "5986",
+                    "5989",
+                    "7001",
+                    "7500",
+                    "8080",
+                    "8443",
+                    "9080",
+                    "9100",
+                    "9443",
+                    "49152-65535"
+                ],
+                "sourceAddressPrefixes": [
+                    "10.41.128.24",
+                    "10.40.1.11"
+                ],
+                "destinationAddressPrefixes": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/CMDB_OUTBOUND_ALLOW')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "sourceAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 150,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                    "21",
+                    "22",
+                    "23",
+                    "25",
+                    "53",
+                    "80",
+                    "110",
+                    "111",
+                    "135",
+                    "137",
+                    "139",
+                    "143",
+                    "161",
+                    "162",
+                    "199",
+                    "389",
+                    "427",
+                    "443",
+                    "445",
+                    "515",
+                    "548",
+                    "587",
+                    "636",
+                    "993",
+                    "995",
+                    "989",
+                    "990",
+                    "1414",
+                    "1433",
+                    "1521",
+                    "2049",
+                    "3306",
+                    "5060",
+                    "5432",
+                    "5480",
+                    "5666",
+                    "5985",
+                    "5986",
+                    "5989",
+                    "7001",
+                    "7500",
+                    "8080",
+                    "8443",
+                    "9080",
+                    "9100",
+                    "9443",
+                    "49152-65535"
+                ],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": [
+                    "10.40.1.11",
+                    "10.41.128.24"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name'), '/DENY_Internet_Access')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "Internet",
+                "destinationAddressPrefix": "*",
+                "access": "Deny",
+                "priority": 150,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name'), '/InCapsula_Sources')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 140,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [
+                    "199.83.128.0/21",
+                    "198.143.32.0/19",
+                    "149.126.72.0/21",
+                    "103.28.248.0/22",
+                    "45.64.64.0/22",
+                    "185.11.124.0/22",
+                    "192.230.64.0/18",
+                    "107.154.0.0/16",
+                    "45.60.0.0/16",
+                    "45.223.0.0/16"
+                ],
+                "destinationAddressPrefixes": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/McAfee_Allow')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 160,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                    "8081",
+                    "8883",
+                    "443"
+                ],
+                "sourceAddressPrefixes": [
+                    "10.41.129.206",
+                    "10.41.129.76"
+                ],
+                "destinationAddressPrefixes": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/McAFEE_OUTBOUND_ALLOW')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "sourceAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 160,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                    "8883",
+                    "443",
+                    "8081"
+                ],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": [
+                    "10.41.129.206",
+                    "10.41.129.76"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/Opsview_Allow')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 170,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                    "5666",
+                    "5667",
+                    "443"
+                ],
+                "sourceAddressPrefixes": [
+                    "10.41.128.112",
+                    "10.114.9.15"
+                ],
+                "destinationAddressPrefixes": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/Opsview_outbound_allow')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "sourceAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 170,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                    "5666",
+                    "5667",
+                    "443",
+                    "22"
+                ],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": [
+                    "10.114.9.15",
+                    "10.41.128.112"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/Port_22')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "22",
+                "sourceAddressPrefix": "*",
+                "destinationAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 100,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/RDP_ALLOW')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "sourceAddressPrefix": "10.41.130.0/23",
+                "destinationAddressPrefix": "VirtualNetwork",
+                "access": "Allow",
+                "priority": 110,
+                "direction": "Inbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                    "22",
+                    "3389"
+                ],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/RDP_Allow_out')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "destinationPortRange": "*",
+                "sourceAddressPrefix": "VirtualNetwork",
+                "destinationAddressPrefix": "10.41.130.0/23",
+                "access": "Allow",
+                "priority": 110,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/SCCM_OUTBOUND_ALLOW')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "sourceAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 130,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                    "80",
+                    "443",
+                    "10123",
+                    "8530",
+                    "8531"
+                ],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": [
+                    "10.114.9.4",
+                    "10.41.128.167"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups/securityRules",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'), '/SPLUNK_OUTBOUND_ALLOW')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+            ],
+            "properties": {
+                "protocol": "*",
+                "sourcePortRange": "*",
+                "sourceAddressPrefix": "*",
+                "access": "Allow",
+                "priority": 140,
+                "direction": "Outbound",
+                "sourcePortRanges": [],
+                "destinationPortRanges": [
+                    "514-521",
+                    "8089",
+                    "9997"
+                ],
+                "sourceAddressPrefixes": [],
+                "destinationAddressPrefixes": [
+                    "10.114.9.0/24",
+                    "10.40.110.12",
+                    "10.40.110.221",
+                    "10.41.253.147"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones/A",
+            "apiVersion": "2018-09-01",
+            "name": "[concat(parameters('privateDnsZones_privatelink_blob_core_windows_net_name'), '/gcidev')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_blob_core_windows_net_name'))]"
+            ],
+            "properties": {
+                "ttl": 3600,
+                "aRecords": [
+                    {
+                        "ipv4Address": "10.114.192.5"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones/SOA",
+            "apiVersion": "2018-09-01",
+            "name": "[concat(parameters('privateDnsZones_privatelink_blob_core_windows_net_name'), '/@')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_blob_core_windows_net_name'))]"
+            ],
+            "properties": {
+                "ttl": 3600,
+                "soaRecord": {
+                    "email": "azureprivatedns-host.microsoft.com",
+                    "expireTime": 2419200,
+                    "host": "azureprivatedns.net",
+                    "refreshTime": 3600,
+                    "retryTime": 300,
+                    "serialNumber": 1,
+                    "minimumTtl": 10
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('routeTables_m_use2_lle_gci__routetable__001_name'), '/Azure-Prod-vnets')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__routetable__001_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.114.0.0/17",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.114.2.5"
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('routeTables_m_use2_lle_gci__rt__002_name'), '/Azure-Prod-vnets')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__rt__002_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.114.0.0/17",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.114.2.5"
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('routeTables_m_use2_lle_gci__routetable__001_name'), '/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__routetable__001_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "0.0.0.0/0",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.114.2.15"
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('routeTables_m_use2_lle_gci__rt__002_name'), '/InComm_Summary')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__rt__002_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.0.0.0/8",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.114.2.10"
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('routeTables_m_use2_lle_gci__routetable__001_name'), '/InCommSummary')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__routetable__001_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.0.0.0/8",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.114.2.10"
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('routeTables_m_use2_lle_gci__rt__002_name'), '/Internet')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__rt__002_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "0.0.0.0/0",
+                "nextHopType": "Internet"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), '/GatewaySubnet')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.114.193.0/24",
+                "serviceEndpoints": [],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), '/', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), '-azuse2-transit-network-vnet-01-peering')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'))]"
+            ],
+            "properties": {
+                "peeringState": "Connected",
+                "remoteVirtualNetwork": {
+                    "id": "[parameters('virtualNetworks_azuse2_transit_network_vnet_01_externalid')]"
+                },
+                "allowVirtualNetworkAccess": true,
+                "allowForwardedTraffic": true,
+                "allowGatewayTransit": false,
+                "useRemoteGateways": true,
+                "remoteAddressSpace": {
+                    "addressPrefixes": [
+                        "10.114.0.0/22"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(parameters('storageAccounts_gcidev_name'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_gcidev_name'))]"
+            ],
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                },
+                "deleteRetentionPolicy": {
+                    "enabled": false
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/fileServices",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(parameters('storageAccounts_gcidev_name'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_gcidev_name'))]"
+            ],
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/privateEndpointConnections",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(parameters('storageAccounts_gcidev_name'), '/', parameters('storageAccounts_gcidev_name'), '.f59859c0-9b15-4276-9212-fb47cc5b4c44')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_gcidev_name'))]"
+            ],
+            "properties": {
+                "provisioningState": "Succeeded",
+                "privateEndpoint": {},
+                "privateLinkServiceConnectionState": {
+                    "status": "Approved",
+                    "description": "Auto-Approved",
+                    "actionRequired": "None"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/queueServices",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(parameters('storageAccounts_gcidev_name'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_gcidev_name'))]"
+            ],
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/tableServices",
+            "apiVersion": "2020-08-01-preview",
+            "name": "[concat(parameters('storageAccounts_gcidev_name'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_gcidev_name'))]"
+            ],
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                }
+            }
+        },
+        {
+            "type": "Microsoft.CertificateRegistration/certificateOrders/certificates",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('certificateOrders_dev_walmart_name'), '/', parameters('certificateOrders_dev_walmart_name'))]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.CertificateRegistration/certificateOrders', parameters('certificateOrders_dev_walmart_name'))]",
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_walmart_bulk_name'))]"
+            ],
+            "properties": {
+                "keyVaultId": "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_walmart_bulk_name'))]",
+                "keyVaultSecretName": "dev-walmartaf6a04ab-c0b3-4637-a9fd-a38fc6ba9989",
+                "provisioningState": "Succeeded"
+            }
+        },
+        {
+            "type": "Microsoft.Network/applicationGateways",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('applicationGateways_m_use2_lle_gci__agw__002_name')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), 'm-use2-lle-gci--sub--002')]",
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_m_use2_lle_gci__eipwalmart__002_name'))]"
+            ],
+            "tags": {
+                "Business-unit": " 1110",
+                "Cost-Center": "54301",
+                "Owner": "Kathy Kaiser",
+                "environment": "Dev, QA, UAT",
+                "platform-application": "GCI",
+                "data-sovereignty-location": "US",
+                "logical-segment": "cat-3",
+                "compliance-data-profile": "none"
+            },
+            "zones": [
+                "1",
+                "2",
+                "3"
+            ],
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "/subscriptions/e07b13da-e30b-4bfd-a8fa-0c4ac75e6de3/resourcegroups/m-use2-lle-gci--rg-network-001/providers/Microsoft.ManagedIdentity/userAssignedIdentities/gci-dev": {
+                        "principalId": "07ad28f4-e67c-4d9d-9b5c-fc57be67d590",
+                        "clientId": "c6f7f7e6-6a4a-42bc-9b4c-fd481d4e5290"
+                    }
+                }
+            },
+            "properties": {
+                "sku": {
+                    "name": "Standard_v2",
+                    "tier": "Standard_v2"
+                },
+                "gatewayIPConfigurations": [
+                    {
+                        "name": "appGatewayIpConfig",
+                        "properties": {
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), 'm-use2-lle-gci--sub--002')]"
+                            }
+                        }
+                    }
+                ],
+                "sslCertificates": [
+                    {
+                        "name": "walmart-bulk-httpsvaultCert",
+                        "properties": {
+                            "keyVaultSecretId": "https://walmart-bulk.vault.azure.net/secrets/walmartwildcard/60364406c4284552b679a10304c6ae74"
+                        }
+                    }
+                ],
+                "trustedRootCertificates": [],
+                "frontendIPConfigurations": [
+                    {
+                        "name": "appGwPublicFrontendIp",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_m_use2_lle_gci__eipwalmart__002_name'))]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "m-use2-lle-gci--agwpriip--002",
+                        "properties": {
+                            "privateIPAddress": "10.114.192.69",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), 'm-use2-lle-gci--sub--002')]"
+                            }
+                        }
+                    }
+                ],
+                "frontendPorts": [
+                    {
+                        "name": "port_80",
+                        "properties": {
+                            "port": 80
+                        }
+                    },
+                    {
+                        "name": "port_443",
+                        "properties": {
+                            "port": 443
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "walmart-dev",
+                        "properties": {
+                            "backendAddresses": []
+                        }
+                    }
+                ],
+                "backendHttpSettingsCollection": [
+                    {
+                        "name": "walmart-backend-2-frontend",
+                        "properties": {
+                            "port": 443,
+                            "protocol": "Https",
+                            "cookieBasedAffinity": "Disabled",
+                            "pickHostNameFromBackendAddress": false,
+                            "affinityCookieName": "ApplicationGatewayAffinity",
+                            "requestTimeout": 20
+                        }
+                    }
+                ],
+                "httpListeners": [
+                    {
+                        "name": "walmart-bulk-https",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_m_use2_lle_gci__agw__002_name')), '/frontendIPConfigurations/m-use2-lle-gci--agwpriip--002')]"
+                            },
+                            "frontendPort": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_m_use2_lle_gci__agw__002_name')), '/frontendPorts/port_443')]"
+                            },
+                            "protocol": "Https",
+                            "sslCertificate": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_m_use2_lle_gci__agw__002_name')), '/sslCertificates/walmart-bulk-httpsvaultCert')]"
+                            },
+                            "hostNames": [],
+                            "requireServerNameIndication": false
+                        }
+                    }
+                ],
+                "urlPathMaps": [],
+                "requestRoutingRules": [
+                    {
+                        "name": "walmart-dev-https-listen",
+                        "properties": {
+                            "ruleType": "Basic",
+                            "httpListener": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_m_use2_lle_gci__agw__002_name')), '/httpListeners/walmart-bulk-https')]"
+                            },
+                            "backendAddressPool": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_m_use2_lle_gci__agw__002_name')), '/backendAddressPools/walmart-dev')]"
+                            },
+                            "backendHttpSettings": {
+                                "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_m_use2_lle_gci__agw__002_name')), '/backendHttpSettingsCollection/walmart-backend-2-frontend')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [],
+                "rewriteRuleSets": [],
+                "redirectConfigurations": [],
+                "privateLinkConfigurations": [],
+                "enableHttp2": false,
+                "autoscaleConfiguration": {
+                    "minCapacity": 1,
+                    "maxCapacity": 10
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('networkInterfaces_walmart_b2b_dev_webs334_name')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), 'm-use2-lle-gci--snet--001')]",
+                "[resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_m_use2_lle_gci__agw__002_name'))]"
+            ],
+            "tags": {
+                "business-unit": "1110",
+                "cost-center": "54301",
+                "owner": "Kathy Kaiser",
+                "environment": "Dev, QA, UAT",
+                "platform-application": "GCI",
+                "compliance-data-profile": "None",
+                "data-sovereignty-location": "US",
+                "logical-segment": "cat-3"
+            },
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.114.192.6",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), 'm-use2-lle-gci--snet--001')]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4",
+                            "applicationGatewayBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/applicationGateways', parameters('applicationGateways_m_use2_lle_gci__agw__002_name')), '/backendAddressPools/walmart-dev')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableAcceleratedNetworking": false,
+                "enableIPForwarding": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateDnsZones/virtualNetworkLinks",
+            "apiVersion": "2018-09-01",
+            "name": "[concat(parameters('privateDnsZones_privatelink_blob_core_windows_net_name'), '/bfzk76yzpylds')]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/privateDnsZones', parameters('privateDnsZones_privatelink_blob_core_windows_net_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'))]"
+            ],
+            "tags": {
+                "business-unit": " 1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "properties": {
+                "registrationEnabled": false,
+                "virtualNetwork": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('privateEndpoints_iikcgcidev_name')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_gcidev_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), 'm-use2-lle-gci--snet--001')]"
+            ],
+            "tags": {
+                "business-unit": " 1110",
+                "environment": "Dev, QA, UAT",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "logical-segment": "cat-3",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI"
+            },
+            "properties": {
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "[concat(parameters('privateEndpoints_iikcgcidev_name'), '_ef00b9ea-298e-4e5a-9c6b-4914c95f3014')]",
+                        "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_gcidev_name'))]",
+                            "groupIds": [
+                                "blob"
+                            ],
+                            "privateLinkServiceConnectionState": {
+                                "status": "Approved",
+                                "description": "Auto-Approved",
+                                "actionsRequired": "None"
+                            }
+                        }
+                    }
+                ],
+                "manualPrivateLinkServiceConnections": [],
+                "subnet": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), 'm-use2-lle-gci--snet--001')]"
+                },
+                "customDnsConfigs": [
+                    {
+                        "fqdn": "gcidev.blob.core.windows.net",
+                        "ipAddresses": [
+                            "10.114.192.5"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), '/m-use2-lle-gci--snet--001')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__routetable__001_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.114.192.0/26",
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+                },
+                "routeTable": {
+                    "id": "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__routetable__001_name'))]"
+                },
+                "serviceEndpoints": [
+                    {
+                        "service": "Microsoft.EventHub",
+                        "locations": [
+                            "*"
+                        ]
+                    }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2020-05-01",
+            "name": "[concat(parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), '/m-use2-lle-gci--sub--002')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__rt__002_name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.114.192.64/26",
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name'))]"
+                },
+                "routeTable": {
+                    "id": "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__rt__002_name'))]"
+                },
+                "serviceEndpoints": [],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2020-05-01",
+            "name": "[parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__routetable__001_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__rt__002_name'))]"
+            ],
+            "tags": {
+                "business-unit": "1110",
+                "compliance-data-profile": "none",
+                "cost-center": "54301",
+                "data-sovereignty-location": "us",
+                "environment": "Dev, QA, UAT",
+                "owner": "eKaiser@incomm.com",
+                "platform-application": "GCI",
+                "logical-segment": "cat-3"
+            },
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.114.192.0/23"
+                    ]
+                },
+                "dhcpOptions": {
+                    "dnsServers": [
+                        "10.114.11.10",
+                        "10.114.11.11"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "m-use2-lle-gci--snet--001",
+                        "properties": {
+                            "addressPrefix": "10.114.192.0/26",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__001_name'))]"
+                            },
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__routetable__001_name'))]"
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.EventHub",
+                                    "locations": [
+                                        "*"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "GatewaySubnet",
+                        "properties": {
+                            "addressPrefix": "10.114.193.0/24",
+                            "serviceEndpoints": [],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "m-use2-lle-gci--sub--002",
+                        "properties": {
+                            "addressPrefix": "10.114.192.64/26",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_m_use2_lle_gci__nsg__002_name'))]"
+                            },
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_m_use2_lle_gci__rt__002_name'))]"
+                            },
+                            "serviceEndpoints": [],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": [
+                    {
+                        "name": "[concat(parameters('virtualNetworks_m_use2_lle_gci__vnet__001_name'), '-azuse2-transit-network-vnet-01-peering')]",
+                        "properties": {
+                            "peeringState": "Connected",
+                            "remoteVirtualNetwork": {
+                                "id": "[parameters('virtualNetworks_azuse2_transit_network_vnet_01_externalid')]"
+                            },
+                            "allowVirtualNetworkAccess": true,
+                            "allowForwardedTraffic": true,
+                            "allowGatewayTransit": false,
+                            "useRemoteGateways": true,
+                            "remoteAddressSpace": {
+                                "addressPrefixes": [
+                                    "10.114.0.0/22"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "enableDdosProtection": false,
+                "enableVmProtection": false
+            }
+        }
+    ]
+}
