@@ -1,0 +1,94 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_walmart_B2B_dev_webserver_001_name": {
+            "defaultValue": "walmart-B2B-dev-webserver-001",
+            "type": "String"
+        },
+        "galleries_az_sharedservices_images_01_externalid": {
+            "defaultValue": "/subscriptions/862d584d-5ca3-40c5-868a-3382de99b616/resourceGroups/azuse2-sharedservices-goldimages-rsg-01/providers/Microsoft.Compute/galleries/az_sharedservices_images_01",
+            "type": "String"
+        },
+        "disks_walmart_B2B_dev_webserver_001_OsDisk_1_d4251b2319a9495da315f52574d43759_externalid": {
+            "defaultValue": "/subscriptions/e07b13da-e30b-4bfd-a8fa-0c4ac75e6de3/resourceGroups/m-use2-lle-gci--rg-network-001/providers/Microsoft.Compute/disks/walmart-B2B-dev-webserver-001_OsDisk_1_d4251b2319a9495da315f52574d43759",
+            "type": "String"
+        },
+        "networkInterfaces_walmart_b2b_dev_webs334_externalid": {
+            "defaultValue": "/subscriptions/e07b13da-e30b-4bfd-a8fa-0c4ac75e6de3/resourceGroups/m-use2-lle-gci--rg-network-001/providers/Microsoft.Network/networkInterfaces/walmart-b2b-dev-webs334",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-07-01",
+            "name": "[parameters('virtualMachines_walmart_B2B_dev_webserver_001_name')]",
+            "location": "eastus2",
+            "tags": {
+                "business-unit": "1110",
+                "cost-center": "54301",
+                "owner": "Kathy Kaiser",
+                "environment": "Dev, QA, UAT",
+                "platform-application": "GCI",
+                "compliance-data-profile": "None",
+                "data-sovereignty-location": "US",
+                "logical-segment": "cat-3"
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_D2s_v3"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "id": "[concat(parameters('galleries_az_sharedservices_images_01_externalid'), '/images/InCommlinuxGOLD')]"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(parameters('virtualMachines_walmart_B2B_dev_webserver_001_name'), '_OsDisk_1_d4251b2319a9495da315f52574d43759')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS",
+                            "id": "[parameters('disks_walmart_B2B_dev_webserver_001_OsDisk_1_d4251b2319a9495da315f52574d43759_externalid')]"
+                        },
+                        "diskSizeGB": 30
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_walmart_B2B_dev_webserver_001_name')]",
+                    "adminUsername": "azureuser",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "/home/azureuser/.ssh/authorized_keys",
+                                    "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCwqP8b5IVMwkyoSnrg/E0b/sLZ\r\n56tPABC+Yn0omM+k/I13VMJ/xy9JMJxISSorp+BMzg2MG+FS58ahR5/o5/Uhke2s\r\nVVvWQ8yFbU19m79R4p8lI0YN3GjHd+4U1UBzyZfCv+x+BdjmE/De+rwgY38zN5Si\r\n9KcVZCqRk4G0ELUtguTNzTjuDaQzVrfZix5CQsxn1DZOyLT1PylY2aE9GeAu0AsY\r\nwiNLFlYaXVllH7ihLN3/T+uXLe5xT48w164wFWRWcbwewiwkyVgGeK3tYC2XsOak\r\n+3NJJNaKdOH9nFT4Engdh1dWyCxtvxKJdV6ymzSMHFSix+VbnmtDZMGqpHvNcRx/\r\nDevNu0CXIqZWjvRU8hMzKQ04AZ7sC+K18sg2NDT+68f+bVGT0GXxH56DE2Oon59u\r\nnGL/CJyXrMThJsCaknP80Il9tOqZCXpREkpJKI4hcOOaiWDPODiFS1CODcdk/3fZ\r\n2y3OfLuGbS/BD5rQX6IFoTgIjy8P+RUNC7xs0gM= generated-by-azure\r\n"
+                                }
+                            ]
+                        },
+                        "provisionVMAgent": true
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true,
+                    "requireGuestProvisionSignal": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[parameters('networkInterfaces_walmart_b2b_dev_webs334_externalid')]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true
+                    }
+                }
+            }
+        }
+    ]
+}

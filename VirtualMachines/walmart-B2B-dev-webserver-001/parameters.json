@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_walmart_B2B_dev_webserver_001_name": {
+            "value": null
+        },
+        "galleries_az_sharedservices_images_01_externalid": {
+            "value": null
+        },
+        "disks_walmart_B2B_dev_webserver_001_OsDisk_1_d4251b2319a9495da315f52574d43759_externalid": {
+            "value": null
+        },
+        "networkInterfaces_walmart_b2b_dev_webs334_externalid": {
+            "value": null
+        }
+    }
+}
